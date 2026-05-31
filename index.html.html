@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karan Rao — Senior Business Analyst</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #16294a;
+    --navy-light: #1e3a5f;
+    --teal: #0d9e75;
+    --teal-hover: #0b8a65;
+    --teal-light: #e1f5ee;
+    --teal-mid: #1d9e75;
+    --text-main: #0a1628;
+    --text-muted: #4d5f72;
+    --text-light: #8fa0b0;
+    --bg: #f4f7fb;
+    --surface: #ffffff;
+    --border: rgba(10,22,40,0.09);
+    --border-strong: rgba(10,22,40,0.16);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text-main); font-size: 15px; line-height: 1.7; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    background: rgba(10,22,40,0.92);
+    backdrop-filter: blur(16px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 6vw; height: 58px;
+  }
+  .nav-logo { font-family: 'DM Serif Display', serif; font-size: 18px; color: #fff; letter-spacing: -0.3px; }
+  .nav-links { display: flex; gap: 30px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.55); text-decoration: none; letter-spacing: 0.3px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--teal-light); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 110px 8vw 70px;
+    gap: 60px;
+    background: var(--navy);
+    position: relative;
+    overflow: hidden;
+  }
+  /* SVG background canvas */
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    pointer-events: none;
+  }
+  /* Dot-grid overlay */
+  .hero-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .hero-text { position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(13,158,117,0.18); color: #5ddbb8;
+    border: 1px solid rgba(13,158,117,0.35);
+    font-size: 11px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 20px; margin-bottom: 26px;
+  }
+  .hero-badge span { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(44px, 5.5vw, 72px);
+    line-height: 1.06; letter-spacing: -2px;
+    color: #fff; margin-bottom: 10px;
+  }
+  h1 em { font-style: italic; color: #5ddbb8; }
+  .hero-title { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.45); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 26px; }
+  .hero-divider { width: 48px; height: 2px; background: var(--teal); margin-bottom: 26px; border-radius: 2px; }
+  .hero-summary { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.85; max-width: 500px; margin-bottom: 44px; }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 24px; border-radius: 8px;
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    transition: all 0.2s; cursor: pointer; border: none; font-family: 'DM Sans', sans-serif;
+  }
+  .btn-primary { background: var(--teal); color: #fff; }
+  .btn-primary:hover { background: var(--teal-hover); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,158,117,0.35); }
+  .btn-outline { background: transparent; color: rgba(255,255,255,0.8); border: 1.5px solid rgba(255,255,255,0.2); }
+  .btn-outline:hover { border-color: rgba(93,219,184,0.6); color: #5ddbb8; transform: translateY(-2px); }
+
+  .hero-visual { position: relative; z-index: 1; display: flex; justify-content: center; align-items: center; }
+  .hero-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px; padding: 36px;
+    color: white; width: 340px;
+    backdrop-filter: blur(20px);
+  }
+  .hero-card-avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: linear-gradient(135deg, #0d9e75, #085041);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif; font-size: 24px; color: white;
+    margin-bottom: 18px;
+    box-shadow: 0 0 0 4px rgba(13,158,117,0.2);
+  }
+  .hero-card h3 { font-family: 'DM Serif Display', serif; font-size: 22px; margin-bottom: 4px; color: #fff; }
+  .hero-card .sub { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1px; }
+  .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; }
+  .stat-box { background: rgba(255,255,255,0.06); border-radius: 12px; padding: 14px; border: 1px solid rgba(255,255,255,0.08); }
+  .stat-box .num { font-size: 28px; font-weight: 600; color: #5ddbb8; font-family: 'DM Serif Display', serif; }
+  .stat-box .lbl { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .domains { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ctag { font-size: 11px; padding: 4px 10px; border-radius: 20px; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.1); }
+
+  /* ── SECTIONS ── */
+  section { padding: 92px 8vw; position: relative; }
+  .section-bg-light { background: var(--surface); }
+  .section-bg-subtle { background: var(--bg); }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+  h2 { font-family: 'DM Serif Display', serif; font-size: clamp(30px, 3.2vw, 44px); letter-spacing: -0.8px; color: var(--navy); margin-bottom: 52px; line-height: 1.12; }
+  h2 em { font-style: italic; color: var(--teal); }
+
+  /* ── SECTION BACKGROUNDS ── */
+  .section-decorated { overflow: hidden; }
+  .section-decorated::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(13,158,117,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .section-decorated::after {
+    content: '';
+    position: absolute; bottom: -60px; left: 10%;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(10,22,40,0.03) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ── EXPERIENCE ── */
+  .timeline { position: relative; padding-left: 36px; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 0; width: 1.5px; background: var(--border); }
+  .exp-item { position: relative; margin-bottom: 56px; }
+  .exp-item::before {
+    content: ''; position: absolute; left: -42px; top: 8px;
+    width: 13px; height: 13px; border-radius: 50%;
+    background: var(--teal); border: 3px solid var(--surface);
+    box-shadow: 0 0 0 3px rgba(13,158,117,0.2);
+  }
+  .section-bg-subtle .exp-item::before { border-color: var(--bg); }
+  .exp-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 5px; }
+  .exp-company { font-size: 12px; font-weight: 700; color: var(--teal); letter-spacing: 0.3px; }
+  .exp-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-light); }
+  .exp-date { font-size: 11px; color: var(--text-light); background: var(--bg); padding: 2px 10px; border-radius: 20px; border: 0.5px solid var(--border); }
+  .section-bg-light .exp-date { background: var(--bg); }
+  .section-bg-subtle .exp-date { background: var(--surface); }
+  .exp-role { font-size: 18px; font-weight: 600; color: var(--navy); margin-bottom: 14px; letter-spacing: -0.3px; }
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .exp-bullets li { font-size: 14px; color: var(--text-muted); padding-left: 18px; position: relative; line-height: 1.7; }
+  .exp-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--teal); font-size: 11px; top: 2px; }
+
+  /* ── PROJECTS ── */
+  .project-card {
+    background: var(--surface);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .project-card:last-child { margin-bottom: 0; }
+  .project-header {
+    background: var(--navy);
+    padding: 32px 40px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: start;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-header::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: rgba(13,158,117,0.1);
+  }
+  .project-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: #5ddbb8; background: rgba(13,158,117,0.15); border: 1px solid rgba(13,158,117,0.3);
+    padding: 4px 12px; border-radius: 20px; margin-bottom: 12px;
+  }
+  .project-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: #fff; line-height: 1.2; margin-bottom: 8px; }
+  .project-subtitle { font-size: 13px; color: rgba(255,255,255,0.45); }
+  .project-impact {
+    display: flex; flex-direction: column; gap: 8px; align-items: flex-end;
+  }
+  .impact-badge {
+    background: rgba(13,158,117,0.2); border: 1px solid rgba(13,158,117,0.35);
+    border-radius: 10px; padding: 10px 18px; text-align: center; min-width: 110px;
+  }
+  .impact-badge .impact-num { font-size: 24px; font-weight: 700; color: #5ddbb8; font-family: 'DM Serif Display', serif; line-height: 1; }
+  .impact-badge .impact-lbl { font-size: 10px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 3px; }
+
+  .project-body { padding: 36px 40px; }
+  .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+  .proj-section-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-light); margin-bottom: 14px; }
+  .proj-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .proj-bullets li { font-size: 14px; color: var(--text-muted); padding-left: 18px; position: relative; line-height: 1.65; }
+  .proj-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--teal); font-size: 10px; top: 3px; }
+  .project-tech { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border); }
+  .tech-pill {
+    font-size: 12px; padding: 5px 14px; border-radius: 20px;
+    background: var(--bg); border: 1px solid var(--border-strong);
+    color: var(--navy); font-weight: 500;
+  }
+  .tech-pill.highlight { background: var(--teal-light); color: #0b6b52; border-color: rgba(13,158,117,0.25); }
+  .outcome-strip {
+    background: var(--teal-light);
+    border-left: 4px solid var(--teal);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px; margin-top: 24px;
+    font-size: 14px; color: #0b6b52; line-height: 1.65;
+  }
+  .outcome-strip strong { font-weight: 600; }
+
+  /* ── SKILLS ── */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 22px; }
+  .skill-group { background: var(--surface); border-radius: 16px; padding: 26px; border: 1px solid var(--border); }
+  .skill-group-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-light); margin-bottom: 16px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag { font-size: 13px; padding: 5px 12px; border-radius: 6px; background: var(--bg); border: 1px solid var(--border); color: var(--text-main); font-weight: 400; }
+
+  /* ── CERTS ── */
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+  .cert-card { background: var(--surface); border-radius: 16px; padding: 22px 24px; border: 1px solid var(--border); display: flex; gap: 16px; align-items: flex-start; transition: border-color 0.2s, transform 0.2s; }
+  .cert-card:hover { border-color: rgba(13,158,117,0.3); transform: translateY(-2px); }
+  .cert-icon { width: 42px; height: 42px; border-radius: 12px; background: var(--teal-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 20px; }
+  .cert-name { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .cert-org { font-size: 12px; color: var(--text-light); }
+
+  /* ── CONTACT ── */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; align-items: start; }
+  .contact-info { display: flex; flex-direction: column; gap: 14px; }
+  .contact-row { display: flex; align-items: center; gap: 14px; }
+  .contact-row .icon { width: 42px; height: 42px; border-radius: 12px; background: var(--teal-light); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .contact-row .label { font-size: 10px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.8px; }
+  .contact-row .value { font-size: 14px; color: var(--navy); font-weight: 500; }
+  .cta-box { background: var(--navy); border-radius: 22px; padding: 42px; color: white; position: relative; overflow: hidden; }
+  .cta-box::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; border-radius: 50%; background: rgba(13,158,117,0.12); }
+  .cta-box h3 { font-family: 'DM Serif Display', serif; font-size: 28px; margin-bottom: 14px; line-height: 1.2; position: relative; }
+  .cta-box p { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 30px; line-height: 1.75; position: relative; }
+
+  /* ── FOOTER ── */
+  footer { padding: 28px 8vw; background: var(--navy); display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: rgba(255,255,255,0.3); }
+  footer a { color: rgba(93,219,184,0.7); text-decoration: none; }
+  footer a:hover { color: #5ddbb8; }
+
+  /* ── ANIMATIONS ── */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .fade-in-delay { transition-delay: 0.15s; }
+  .fade-in-delay2 { transition-delay: 0.25s; }
+
+  @media (max-width: 800px) {
+    .hero { grid-template-columns: 1fr; padding: 100px 6vw 60px; }
+    .hero-visual { display: none; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .project-grid { grid-template-columns: 1fr; }
+    .project-header { grid-template-columns: 1fr; }
+    .project-impact { flex-direction: row; align-items: flex-start; }
+    nav { padding: 0 6vw; }
+    .nav-links { display: none; }
+    .project-header, .project-body { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Karan Rao</div>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#credentials">Credentials</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <!-- Rich SVG background -->
+  <div class="hero-bg">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#0a1628"/>
+          <stop offset="100%" stop-color="#0e2240"/>
+        </linearGradient>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#g1)"/>
+      <!-- Large circle rings -->
+      <circle cx="75%" cy="50%" r="340" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+      <circle cx="75%" cy="50%" r="260" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+      <circle cx="75%" cy="50%" r="180" fill="none" stroke="rgba(13,158,117,0.1)" stroke-width="1"/>
+      <circle cx="75%" cy="50%" r="100" fill="none" stroke="rgba(13,158,117,0.12)" stroke-width="1.5"/>
+      <!-- Teal accent arc -->
+      <path d="M 900 0 Q 1100 300 900 600" stroke="rgba(13,158,117,0.15)" stroke-width="2" fill="none"/>
+      <path d="M 950 0 Q 1200 350 950 700" stroke="rgba(13,158,117,0.07)" stroke-width="1" fill="none"/>
+      <!-- Diagonal grid lines -->
+      <line x1="0" y1="0" x2="1600" y2="900" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+      <line x1="200" y1="0" x2="1800" y2="900" stroke="rgba(255,255,255,0.02)" stroke-width="1"/>
+      <line x1="0" y1="200" x2="1400" y2="900" stroke="rgba(255,255,255,0.02)" stroke-width="1"/>
+      <!-- Small accent dots -->
+      <circle cx="72%" cy="20%" r="3" fill="rgba(13,158,117,0.5)"/>
+      <circle cx="82%" cy="70%" r="2" fill="rgba(13,158,117,0.4)"/>
+      <circle cx="60%" cy="80%" r="4" fill="rgba(13,158,117,0.15)"/>
+      <circle cx="90%" cy="30%" r="5" fill="rgba(255,255,255,0.05)"/>
+      <!-- Corner geometric shapes -->
+      <polygon points="1400,0 1600,0 1600,200" fill="rgba(13,158,117,0.06)"/>
+      <polygon points="0,700 0,900 200,900" fill="rgba(13,158,117,0.04)"/>
+    </svg>
+  </div>
+
+  <div class="hero-text fade-in">
+    <div class="hero-badge"><span></span> Open to opportunities</div>
+    <h1>Karan<br><em>Rao</em></h1>
+    <p class="hero-title">Senior Business Analyst &nbsp;·&nbsp; Agile Delivery</p>
+    <div class="hero-divider"></div>
+    <p class="hero-summary">Results-driven Product Owner and Implementation Specialist with 7+ years of experience across healthcare IT, banking, and financial services. Expert at bridging business needs and technical delivery.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-primary">Get in touch</a>
+      <a href="#experience" class="btn btn-outline">View experience</a>
+    </div>
+  </div>
+
+  <div class="hero-visual fade-in fade-in-delay">
+    <div class="hero-card">
+      <div class="hero-card-avatar">KR</div>
+      <h3>Karan Rao</h3>
+      <div class="sub">Pune, India &nbsp;·&nbsp; PSPO I Certified</div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="num">7+</div><div class="lbl">Yrs Experience</div></div>
+        <div class="stat-box"><div class="num">3</div><div class="lbl">Industry Domains</div></div>
+      </div>
+      <div class="domains">
+        <span class="ctag">Healthcare IT</span>
+        <span class="ctag">Banking & Finance</span>
+        <span class="ctag">Agile / Scrum</span>
+        <span class="ctag">HIPAA</span>
+        <span class="ctag">Data Migration</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="section-bg-subtle section-decorated">
+  <div class="section-label">Work history</div>
+  <h2 class="fade-in">Professional <em>experience</em></h2>
+  <div class="timeline">
+
+    <div class="exp-item fade-in">
+      <div class="exp-meta">
+        <span class="exp-company">Simplify Healthcare</span>
+        <span class="exp-dot"></span>
+        <span class="exp-date">January 2024 – Present</span>
+      </div>
+      <div class="exp-role">Senior Business Analyst</div>
+      <ul class="exp-bullets">
+        <li>Lead BA for healthcare IT modules — owned product backlog, sprint planning, and release roadmaps driving patient care and operational efficiency improvements.</li>
+        <li>Translated complex client requirements into actionable user stories, acceptance criteria, and epics ensuring alignment across dev, QA, and business stakeholders.</li>
+        <li>Led end-to-end implementation of HIPAA-compliant solutions, performing impact analysis and managing change requests throughout the SDLC.</li>
+        <li>Developed Proof of Concepts (POCs) and Point of Views (POVs) for clients, accelerating buy-in and solution validation.</li>
+        <li>Blended Waterfall and Agile methodologies as required per module, maintaining delivery velocity while upholding compliance standards.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item fade-in">
+      <div class="exp-meta">
+        <span class="exp-company">SG Analytics – BNY Mellon</span>
+        <span class="exp-dot"></span>
+        <span class="exp-date">March 2022 – January 2024</span>
+      </div>
+      <div class="exp-role">Business Analyst — ECIF-UCM Migration</div>
+      <ul class="exp-bullets">
+        <li>Drove end-to-end implementation of a large-scale data migration initiative, coordinating requirements, process design, and validation across legacy and target systems.</li>
+        <li>Developed comprehensive BRDs and FRDs; served as primary liaison between BNY Mellon stakeholders and technical teams.</li>
+        <li>Built a self-service Tableau tool that automated ad hoc data request processes, eliminating manual effort and significantly reducing turnaround time.</li>
+        <li>Performed data mining and analysis to validate API mappings and integration points; led end-to-end UAT using JIRA and Confluence.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item fade-in">
+      <div class="exp-meta">
+        <span class="exp-company">FortyTwo Labs – Yes Bank | HSBC Bank</span>
+        <span class="exp-dot"></span>
+        <span class="exp-date">July 2020 – March 2022</span>
+      </div>
+      <div class="exp-role">Business Analyst</div>
+      <ul class="exp-bullets">
+        <li>Collaborated with banking stakeholders to elicit business problem statements and translated them into detailed user stories and FRDs for development teams.</li>
+        <li>Performed Gap Analysis to assess compatibility of existing banking infrastructure with new requirements, identifying risks early in the implementation cycle.</li>
+        <li>Created wireframes and mock-ups to communicate solution design, supporting faster stakeholder approvals and reduced rework.</li>
+        <li>Utilized Postman and SoapUI to test and validate APIs, ensuring data accuracy and adherence to integration specifications.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item fade-in">
+      <div class="exp-meta">
+        <span class="exp-company">IT Cube Solutions Pvt Ltd</span>
+        <span class="exp-dot"></span>
+        <span class="exp-date">December 2018 – June 2020</span>
+      </div>
+      <div class="exp-role">Customer Service Representative</div>
+      <ul class="exp-bullets">
+        <li>Managed outbound campaigns meeting call volume, conversion, and quality standards; generated leads for client acquisition.</li>
+        <li>Maintained accurate records of customer interactions and updated lead databases ensuring data integrity and optimized outreach.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="section-bg-light">
+  <div class="section-label">Featured work</div>
+  <h2 class="fade-in">Project <em>highlights</em></h2>
+
+  <!-- PROJECT 1: Self-Service Tableau Tool -->
+  <div class="project-card fade-in">
+    <div class="project-header">
+      <div>
+        <div class="project-tag">⚡ Featured Project</div>
+        <div class="project-title">Self-Service Tableau Automation Tool</div>
+        <div class="project-subtitle">BNY Mellon — ECIF-UCM Data Migration Programme &nbsp;·&nbsp; SG Analytics &nbsp;·&nbsp; 2022–2024</div>
+      </div>
+      <div class="project-impact">
+        <div class="impact-badge">
+          <div class="impact-num">~100%</div>
+          <div class="impact-lbl">Manual effort eliminated</div>
+        </div>
+        <div class="impact-badge">
+          <div class="impact-num">~70%</div>
+          <div class="impact-lbl">TAT reduction</div>
+        </div>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="project-grid">
+        <div>
+          <div class="proj-section-title">Problem Statement</div>
+          <ul class="proj-bullets">
+            <li>During the BNY Mellon ECIF-UCM migration, stakeholders and business teams across multiple LOBs were submitting frequent <strong>ad hoc data requests</strong> — each requiring manual BA intervention to scope, query, and deliver.</li>
+            <li>The process created a bottleneck: every request needed dedicated SQL querying, cross-checking against the migration dataset, and manual delivery via email or spreadsheet — consuming hours per request.</li>
+            <li>With the migration running in parallel across legacy and target environments, the volume of data validation requests was escalating, stretching the BA team thin and slowing sprint velocity.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="proj-section-title">Solution Designed</div>
+          <ul class="proj-bullets">
+            <li>Identified the recurring patterns in ad hoc requests and <strong>mapped the data model</strong> needed to serve 80%+ of all incoming query types without BA intervention.</li>
+            <li>Designed the tool's structure: built parameterized Tableau views connected directly to the underlying migration dataset (legacy + target), enabling stakeholders to apply filters and drill down independently.</li>
+            <li>Defined business rules and field mappings in collaboration with the data team — ensuring the tool surfaced accurate, reconciled data aligned to migration validation checkpoints.</li>
+            <li>Created user guidance documentation and <strong>conducted stakeholder walkthroughs</strong> to drive adoption across teams with varying technical proficiency.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="outcome-strip">
+        <strong>Outcome:</strong> The tool was adopted by multiple LOB teams within the first sprint of launch. Ad hoc data requests to the BA team dropped significantly, freeing up capacity to focus on high-complexity migration analysis, API validation, and UAT coordination. The solution became a reference artefact cited in project retrospectives as a delivery efficiency win.
+      </div>
+
+      <div class="project-tech">
+        <span class="tech-pill highlight">Tableau</span>
+        <span class="tech-pill highlight">Oracle SQL</span>
+        <span class="tech-pill">Data Migration Analysis</span>
+        <span class="tech-pill">Stakeholder Management</span>
+        <span class="tech-pill">Process Automation</span>
+        <span class="tech-pill">Requirements Engineering</span>
+        <span class="tech-pill">JIRA</span>
+        <span class="tech-pill">Confluence</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 2: HIPAA Implementation -->
+  <div class="project-card fade-in">
+    <div class="project-header">
+      <div>
+        <div class="project-tag">🏥 Healthcare IT</div>
+        <div class="project-title">HIPAA-Compliant Healthcare Module Implementation</div>
+        <div class="project-subtitle">Simplify Healthcare &nbsp;·&nbsp; Lead BA &nbsp;·&nbsp; 2024–Present</div>
+      </div>
+      <div class="project-impact">
+        <div class="impact-badge">
+          <div class="impact-num">0</div>
+          <div class="impact-lbl">Compliance defects at go-live</div>
+        </div>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="project-grid">
+        <div>
+          <div class="proj-section-title">Scope & Responsibility</div>
+          <ul class="proj-bullets">
+            <li>Owned the full product backlog for healthcare IT modules — from initial requirement elicitation with clients to sprint delivery and release planning.</li>
+            <li>Defined user stories, epics, and acceptance criteria across document management and BPM workflow modules, ensuring all deliverables met HIPAA standards.</li>
+            <li>Developed POCs and POVs as pre-sales artefacts, enabling faster client buy-in and shortening the solution sign-off cycle.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="proj-section-title">Key Outcomes</div>
+          <ul class="proj-bullets">
+            <li>Zero compliance defects flagged during UAT or post-go-live hypercare across implemented modules.</li>
+            <li>Cross-functional coordination between dev, QA, and compliance teams resulted in on-time, defect-free releases across multiple sprints.</li>
+            <li>Awarded the <strong>GEM Award (Q1 2023–24)</strong> and <strong>Energizer Award (Q1 2025)</strong> recognising delivery impact and team contribution.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="project-tech">
+        <span class="tech-pill highlight">HIPAA Compliance</span>
+        <span class="tech-pill highlight">Agile / Scrum</span>
+        <span class="tech-pill">BPM Workflows</span>
+        <span class="tech-pill">Document Management</span>
+        <span class="tech-pill">Backlog Ownership</span>
+        <span class="tech-pill">UAT Coordination</span>
+        <span class="tech-pill">Azure DevOps</span>
+        <span class="tech-pill">JIRA</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="section-bg-subtle section-decorated">
+  <div class="section-label">Capabilities</div>
+  <h2 class="fade-in">Skills &amp; <em>expertise</em></h2>
+  <div class="skills-grid">
+    <div class="skill-group fade-in">
+      <div class="skill-group-title">Product &amp; Delivery</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Backlog Grooming</span>
+        <span class="skill-tag">Sprint Planning</span>
+        <span class="skill-tag">Roadmapping</span>
+        <span class="skill-tag">Release Management</span>
+        <span class="skill-tag">POC / POV Development</span>
+        <span class="skill-tag">Agile / Scrum / Kanban</span>
+      </div>
+    </div>
+    <div class="skill-group fade-in fade-in-delay">
+      <div class="skill-group-title">Business Analysis</div>
+      <div class="skill-tags">
+        <span class="skill-tag">BRD / FRD</span>
+        <span class="skill-tag">User Stories</span>
+        <span class="skill-tag">Acceptance Criteria</span>
+        <span class="skill-tag">Process Flows</span>
+        <span class="skill-tag">Wireframes</span>
+        <span class="skill-tag">Stakeholder Presentations</span>
+      </div>
+    </div>
+    <div class="skill-group fade-in">
+      <div class="skill-group-title">Implementation &amp; Change</div>
+      <div class="skill-tags">
+        <span class="skill-tag">System Rollout</span>
+        <span class="skill-tag">Go-Live Support</span>
+        <span class="skill-tag">Cutover &amp; Hypercare</span>
+        <span class="skill-tag">Gap Analysis</span>
+        <span class="skill-tag">Risk Mitigation</span>
+        <span class="skill-tag">SDLC Management</span>
+      </div>
+    </div>
+    <div class="skill-group fade-in fade-in-delay">
+      <div class="skill-group-title">Tools &amp; Platforms</div>
+      <div class="skill-tags">
+        <span class="skill-tag">JIRA</span>
+        <span class="skill-tag">Confluence</span>
+        <span class="skill-tag">Azure DevOps</span>
+        <span class="skill-tag">Postman</span>
+        <span class="skill-tag">Swagger UI</span>
+        <span class="skill-tag">SoapUI</span>
+        <span class="skill-tag">Tableau</span>
+        <span class="skill-tag">Power BI</span>
+        <span class="skill-tag">Power Apps</span>
+        <span class="skill-tag">Oracle SQL</span>
+      </div>
+    </div>
+    <div class="skill-group fade-in">
+      <div class="skill-group-title">Domain Expertise</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Healthcare IT</span>
+        <span class="skill-tag">HIPAA Compliance</span>
+        <span class="skill-tag">Banking &amp; FinServ</span>
+        <span class="skill-tag">Data Migration</span>
+        <span class="skill-tag">API Integration</span>
+        <span class="skill-tag">BPM &amp; Doc Management</span>
+      </div>
+    </div>
+    <div class="skill-group fade-in fade-in-delay">
+      <div class="skill-group-title">Education</div>
+      <div class="skill-tags" style="flex-direction: column; gap: 12px;">
+        <div>
+          <div style="font-size:13px; font-weight:600; color: var(--navy);">B.E. – Mechanical Engineering</div>
+          <div style="font-size:12px; color: var(--text-light); margin-top:2px;">JSPM NTC, Pune &nbsp;·&nbsp; 2014–2019</div>
+        </div>
+        <div>
+          <div style="font-size:13px; font-weight:600; color: var(--navy);">Diploma – Mechanical Engineering</div>
+          <div style="font-size:12px; color: var(--text-light); margin-top:2px;">GGSP, Nashik &nbsp;·&nbsp; 2008–2011</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDENTIALS -->
+<section id="credentials" class="section-bg-light">
+  <div class="section-label">Certifications &amp; awards</div>
+  <h2 class="fade-in">Credentials &amp; <em>recognition</em></h2>
+  <div class="certs-grid">
+    <div class="cert-card fade-in">
+      <div class="cert-icon">🏅</div>
+      <div>
+        <div class="cert-name">PSPO I – Professional Scrum Product Owner</div>
+        <div class="cert-org">Scrum.org</div>
+      </div>
+    </div>
+    <div class="cert-card fade-in">
+      <div class="cert-icon">📋</div>
+      <div>
+        <div class="cert-name">Agile Scrum Mastery: Full Project Simulation</div>
+        <div class="cert-org">Certification Course</div>
+      </div>
+    </div>
+    <div class="cert-card fade-in">
+      <div class="cert-icon">⚡</div>
+      <div>
+        <div class="cert-name">Agile Scrum Essentials</div>
+        <div class="cert-org">Certification Course</div>
+      </div>
+    </div>
+    <div class="cert-card fade-in">
+      <div class="cert-icon">🏆</div>
+      <div>
+        <div class="cert-name">GEM Award — Going the Extra Mile</div>
+        <div class="cert-org">Simplify Healthcare &nbsp;·&nbsp; Q1 2023–24</div>
+      </div>
+    </div>
+    <div class="cert-card fade-in">
+      <div class="cert-icon">✨</div>
+      <div>
+        <div class="cert-name">Energizer Award</div>
+        <div class="cert-org">Simplify Healthcare &nbsp;·&nbsp; Q1 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section-bg-subtle">
+  <div class="section-label">Get in touch</div>
+  <h2 class="fade-in">Let's <em>connect</em></h2>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="contact-row fade-in">
+        <div class="icon">📱</div>
+        <div><div class="label">Phone</div><div class="value">+91 73855 43626</div></div>
+      </div>
+      <div class="contact-row fade-in">
+        <div class="icon">✉️</div>
+        <div><div class="label">Email</div><div class="value">krao1502@gmail.com</div></div>
+      </div>
+      <div class="contact-row fade-in">
+        <div class="icon">📍</div>
+        <div><div class="label">Location</div><div class="value">Pune, Maharashtra, India</div></div>
+      </div>
+      <div class="contact-row fade-in">
+        <div class="icon">🔗</div>
+        <div><div class="label">LinkedIn</div><div class="value"><a href="https://www.linkedin.com/in/karan-rao-05b297150/" style="color: var(--teal); text-decoration: none;">linkedin.com/in/karan-rao-05b297150</a></div></div>
+      </div>
+      <div class="fade-in" style="margin-top: 10px; padding-left: 4px;">
+        <div style="font-size:10px; color: var(--text-light); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:10px;">Languages</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <span class="skill-tag">English</span>
+          <span class="skill-tag">Hindi</span>
+          <span class="skill-tag">Marathi</span>
+        </div>
+      </div>
+    </div>
+    <div class="cta-box fade-in">
+      <h3>Open to new opportunities</h3>
+      <p>Whether you're looking for a Senior BA, Product Owner, or Agile delivery lead — I'd love to explore how I can add value to your team.</p>
+      <a href="mailto:krao1502@gmail.com" class="btn btn-primary">Send an email →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Karan Rao</span>
+  <span>Senior Business Analyst &nbsp;·&nbsp; Pune, India &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/karan-rao-05b297150/">LinkedIn</a></span>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>
